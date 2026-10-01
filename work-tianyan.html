@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="蓝耘天衍企业级桌面智能体：产品走查、新手引导与团队协作版设计。">
+  <title>蓝耘天衍｜徐祯焕作品集</title><link rel="icon" href="assets/favicon.svg"><link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="interactive.css">
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="theme-refresh.css">
+  <link rel="stylesheet" href="cursor.css"><script src="cursor.js" defer></script>
+</head>
+<body class="case-page">
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <nav class="nav"><a class="brand" href="index.html"><span class="brand-mark">x.</span><span>徐祯焕</span></a><button class="menu-toggle" aria-label="打开导航" aria-expanded="false">☰</button><div class="nav-links"><a href="index.html#work">作品</a><a href="index.html#interact">原型体验</a><a href="index.html#about">关于我</a><a href="archive.html">创意作品</a><a class="nav-cta" href="assets/xuzhenhuan-resume.pdf" target="_blank" rel="noopener">简历 ↗</a></div></nav>
+  <main>
+    <header class="case-hero tianyan-hero" style="--case-bg:linear-gradient(135deg,#071426,#163669 55%,#5c3ed0)">
+      <img class="case-hero-preview" src="assets/images/tianyan-live.png" alt="" aria-hidden="true">
+      <div class="case-hero-inner"><a class="case-back" href="index.html#work">← 返回精选项目</a><div class="case-kicker">Project 01 · AI 产品实习</div><h1>蓝耘天衍</h1><p class="case-summary">围绕企业级桌面智能体，从产品走查、问题归因到新手引导与团队协作原型，探索“可执行、可理解、可接管”的 AI 工作体验。</p>
+        <dl class="case-meta"><div><dt>我的角色</dt><dd>AI 产品实习生<br>产品体验 / 原型设计</dd></div><div><dt>工作内容</dt><dd>走查测试、需求与 Bug 管理<br>新手引导、团队版设计</dd></div><div><dt>协作对象</dt><dd>产品、研发、测试与设计团队</dd></div><div><dt>关键产出</dt><dd>27 条需求 · 34 条 Bug<br>2 套关键流程原型</dd></div></dl>
+      </div>
+      <div class="case-hero-inner experience-links" aria-label="交互体验入口"><a href="#onboarding-demo">体验新手引导 ↗</a><a href="#team-demo">体验团队协作 ↗</a><a href="#issue-records">查看需求与 Bug ↗</a></div>
+    </header>
+
+    <section class="case-section">
+      <div class="case-wrap case-grid">
+        <aside class="case-aside reveal"><span class="case-label">01 / 产品理解</span><h2>它解决的不是聊天，而是任务交付</h2><p>天衍连接模型、知识、Skill 与本地文件，让用户通过对话组织任务，并直接获得文档、PPT、网页等可继续编辑的结果。</p></aside>
+        <div class="case-content reveal">
+          <div class="insight-grid"><article class="insight"><strong>输入</strong><h3>目标与上下文</h3><p>用户说明任务，并授权文件、知识与工具。</p></article><article class="insight"><strong>执行</strong><h3>模型与技能协同</h3><p>系统调用模型、知识库、Skill 或 MCP 完成步骤。</p></article><article class="insight"><strong>输出</strong><h3>可编辑交付物</h3><p>结果不止是回答，而是可预览、修改和复用的产物。</p></article></div>
+          <figure class="case-figure"><img src="assets/images/tianyan-position.webp" alt="蓝耘天衍产品定位页面"></figure><p class="case-caption">产品定位：企业级桌面智能体，以本地与云端能力协同完成任务。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section alt">
+      <div class="case-wrap case-grid">
+        <aside class="case-aside reveal"><span class="case-label">02 / 走查与测试</span><h2>把“感觉不好用”变成可跟进的问题</h2><p>以首次使用、文件处理、长任务与多轮修改为核心场景进行探索式走查，记录复现路径、预期结果与实际表现，并区分体验、逻辑与模型问题。</p></aside>
+        <div class="case-content reveal">
+          <div class="process"><div class="process-step"><span>01</span><strong>定义任务</strong><small>明确用户、输入与预期产物</small></div><div class="process-step"><span>02</span><strong>执行走查</strong><small>覆盖主路径与异常路径</small></div><div class="process-step"><span>03</span><strong>记录证据</strong><small>环境、步骤、截图与结果</small></div><div class="process-step"><span>04</span><strong>问题归因</strong><small>体验 / 逻辑 / 模型 / 性能</small></div><div class="process-step"><span>05</span><strong>确认优先级</strong><small>影响 × 频率 × 阻塞程度</small></div><div class="process-step"><span>06</span><strong>复测关闭</strong><small>验证修复并补充回归场景</small></div></div>
+          <figure class="case-figure"><img src="assets/images/tianyan-architecture.webp" alt="蓝耘天衍架构与走查方法"></figure><p class="case-caption">工作记录：27 条需求与 34 条 Bug，覆盖任务执行、文件处理与交互反馈。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="issue-records"><div class="case-wrap">
+      <div class="demo-intro"><div><span class="demo-eyebrow">WORKING NOTES / 真实工作记录</span><h2>从问题记录，<br class="narrow-break">看体验关注点</h2></div><p>从实际管理表中选取代表条目，保留原始优先级与状态。可以搜索、筛选，并展开查看记录内容。</p></div>
+      <div data-issue-explorer></div>
+      <noscript><p>需要启用 JavaScript 才能筛选工作记录。原表包含 27 条需求与 34 条 Bug。</p></noscript>
+    </div></section>
+
+    <section class="case-section dark">
+      <div class="case-wrap case-grid">
+        <aside class="case-aside reveal"><span class="case-label">03 / 新手引导</span><h2>让用户在第一次任务中理解产品</h2><p>首次进入产品时，用户不仅不知道“能做什么”，也不知道如何选择模型、Skill 与知识。引导被设计为一条可完成的首次价值路径。</p></aside>
+        <div class="case-content reveal">
+          <ol class="onboarding-path" aria-label="新手引导的五个阶段">
+            <li><span>01</span><strong>建立认知</strong></li>
+            <li><span>02</span><strong>选择场景</strong></li>
+            <li><span>03</span><strong>示例启动</strong></li>
+            <li><span>04</span><strong>获得结果</strong></li>
+            <li><span>05</span><strong>完成新手任务</strong></li>
+          </ol>
+          <figure class="case-figure"><img src="assets/images/tianyan-onboarding.webp" alt="蓝耘天衍新手引导流程"></figure>
+          <div class="insight-grid"><article class="insight"><strong>场景化</strong><h3>从目标出发</h3><p>用写作、分析、PPT 等任务场景替代功能名词堆叠。</p></article><article class="insight"><strong>示例启动</strong><h3>降低空白页压力</h3><p>预填可编辑指令，并展示将调用的知识与工具。</p></article><article class="insight"><strong>渐进反馈</strong><h3>用完成感促学习</h3><p>新手任务清单与悬浮技巧按场景出现，不打断主任务。</p></article></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section deep" id="onboarding-demo"><div class="case-wrap">
+      <div class="demo-intro"><div><span class="demo-eyebrow">TRY IT / 新手引导原型</span><h2>第一步，不必从空白开始</h2></div><p>选择与你的工作有关的场景，从一条示例指令开始。体验引导如何逐步交还操作主动权。</p></div>
+      <div data-prototype="onboarding"></div>
+      <noscript><a href="prototypes/tianyan-onboarding.html">打开新手引导原型</a></noscript>
+    </div></section>
+
+    <section class="case-section">
+      <div class="case-wrap case-grid">
+        <aside class="case-aside reveal"><span class="case-label">04 / 团队协作版</span><h2>给 AI 执行增加上下文、责任与审核</h2><p>团队任务不能让 AI 从头到尾自行运行。原型以项目为容器，将知识、成员、节点状态与人工审核纳入同一条执行链路。</p><a href="#team-demo">体验团队协作原型 ↓</a></aside>
+        <div class="case-content reveal">
+          <div class="figure-pair"><figure class="case-figure"><img src="assets/images/tianyan-team.webp" alt="团队知识库、项目与成员管理界面"></figure><figure class="case-figure"><img src="assets/images/tianyan-hitl.webp" alt="节点执行与人工审核界面"></figure></div>
+          <div class="insight-grid"><article class="insight"><strong>01</strong><h3>共享上下文</h3><p>团队知识库和项目资料统一管理，AI 继承可用上下文。</p></article><article class="insight"><strong>02</strong><h3>明确责任</h3><p>节点可分配给成员或 AI，并保留角色与权限边界。</p></article><article class="insight"><strong>03</strong><h3>人工接管</h3><p>关键结果需要查看、修改与审核后才能流转和归档。</p></article></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section" id="team-demo"><div class="case-wrap">
+      <div class="demo-intro"><div><span class="demo-eyebrow">TRY IT / 团队协作原型</span><h2>AI 执行之后，由谁确认？</h2></div><p>以团队内容任务为例，体验节点协作、交接说明、提交审核与退回修改，查看知识如何随任务流转。</p></div>
+      <div data-prototype="team"></div>
+      <noscript><a href="prototypes/tianyan-team.html">打开团队版原型</a></noscript>
+    </div></section>
+    <section class="case-section alt"><div class="case-wrap"><span class="case-label">05 / 复盘</span><h2 class="case-section-title">从体验观察，走向产品判断</h2><div class="insight-grid"><article class="insight"><strong>方法</strong><h3>以任务而非页面为测试单元</h3><p>一条完整任务链更容易暴露上下文断裂、状态不清与结果不可控的问题。</p></article><article class="insight"><strong>边界</strong><h3>区分产品问题与模型问题</h3><p>先判断输入、编排、检索和交互是否可靠，再讨论模型能力与评测。</p></article><article class="insight"><strong>闭环</strong><h3>让问题能被复现和验证</h3><p>记录环境、输入、预期与实际结果，并在修复后进行同场景复测。</p></article></div></div></section>
+    <a class="next-case" href="work-xinghe.html"><div class="next-inner"><div><small>下一个项目</small><strong>蓝耘星河</strong></div><span class="next-arrow">→</span></div></a>
+  </main>
+  <div class="lightbox"><img alt="放大查看"></div><script src="script.js"></script><script src="interactive.js"></script>
+</body>
+</html>

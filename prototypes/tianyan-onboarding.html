@@ -1,0 +1,1398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>蓝耘天衍 · 新手引导演示</title>
+<link rel="stylesheet" href="../cursor.css"><script src="../cursor.js" defer></script>
+<!-- 离线字体：使用系统内置中文字体 -->
+<style>
+/* 系统字体栈，确保离线状态下正常显示 */
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Microsoft YaHei'), local('PingFang SC'), local('SimHei');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Microsoft YaHei'), local('PingFang SC'), local('SimHei');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Microsoft YaHei'), local('PingFang SC'), local('SimHei');
+}
+@font-face {
+  font-family: 'Noto Sans SC';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Microsoft YaHei'), local('PingFang SC'), local('SimHei');
+}
+</style>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f0e8;--sidebar-bg:#ffffff;--sidebar-w:220px;--content-bg:#faf8f4;--right-bg:#ffffff;
+  --border:#e8e2d8;--text-primary:#1a1a1a;--text-secondary:#666;--text-hint:#999;
+  --orange:#f07c35;--orange-light:#fef3ea;--orange-mid:#f9a262;--blue:#4a7cdc;--accent:#e8a020;
+  --tab-active:#ff8c38;--green:#2db87a;--purple:#7c6fcd;--radius:10px;--shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+body{font-family:'Noto Sans SC',sans-serif;background:var(--bg);height:100vh;overflow:hidden;position:relative}
+.app{display:flex;height:100vh;position:relative}
+
+/* Sidebar */
+.sidebar{width:var(--sidebar-w);background:var(--sidebar-bg);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;z-index:1}
+.sidebar-logo{padding:16px 18px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.sidebar-logo .logo-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#5b8ef0,#3d6be0);display:flex;align-items:center;justify-content:center}
+.sidebar-logo .logo-icon svg{width:18px;height:18px;fill:white}
+.sidebar-logo .logo-text{font-size:14px;font-weight:700;color:var(--text-primary)}
+.sidebar-nav{padding:10px 10px 0}
+.nav-item{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--text-secondary);transition:background 0.15s}
+.nav-item:hover{background:#f5f0e8}
+.nav-item.active{background:var(--orange-light);color:var(--orange);border:1px solid #fde0c0}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;flex-shrink:0}
+.sidebar-section{padding:14px 14px 6px;font-size:11px;color:var(--text-hint);display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.sidebar-section span{letter-spacing:0.02em}
+.sidebar-section .plus{width:16px;height:16px;cursor:pointer;color:var(--text-hint)}
+.plan-item{padding:7px 14px;font-size:12px;color:var(--text-secondary);cursor:pointer;border-radius:6px;margin:0 4px}
+.plan-item:hover{background:#f5f0e8}
+.history-item{padding:6px 14px;font-size:12px;color:var(--text-secondary);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-radius:6px;margin:0 4px}
+.history-item:hover{background:#f5f0e8}
+.history-item.timed::before{content:'';display:inline-block;width:6px;height:6px;border-radius:50%;background:#f9a262;margin-right:5px;flex-shrink:0}
+.sidebar-bottom{margin-top:auto;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border)}
+.sidebar-bottom-btn{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--text-secondary);cursor:pointer;padding:5px 8px;border-radius:6px}
+.sidebar-bottom-btn:hover{background:#f5f0e8}
+.sidebar-bottom-btn svg{width:15px;height:15px;stroke:currentColor;fill:none}
+
+/* Main */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--content-bg)}
+.tabs{height:44px;background:var(--sidebar-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 8px;gap:2px;overflow:hidden}
+.tab{display:flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:12px;color:var(--text-secondary);cursor:pointer;white-space:nowrap;transition:background 0.12s;flex-shrink:0}
+.tab:hover{background:#f5f0e8}
+.tab.active{background:#fff8f0;color:var(--orange);border:1px solid #fde8d0}
+.tab svg{width:13px;height:13px;stroke:currentColor;fill:none}
+.tab .close{width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;margin-left:2px}
+.tab .close:hover{background:#fee0c8}
+.tab-add{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-hint);margin-left:2px}
+.tab-add:hover{background:#f5f0e8}
+.tab-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+.tab-icon-btn{width:28px;height:28px;border-radius:6px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid #fde0c0}
+
+.chat-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;position:relative}
+.greeting{font-size:22px;font-weight:700;color:var(--text-primary);margin-bottom:28px;letter-spacing:-0.02em}
+
+.input-wrap{width:100%;max-width:680px;background:white;border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+.input-top{padding:14px 16px 8px}
+.input-top textarea{width:100%;border:none;outline:none;font-size:14px;color:var(--text-primary);resize:none;font-family:inherit;background:transparent;min-height:36px;line-height:1.6}
+.input-top textarea::placeholder{color:var(--text-hint)}
+.input-bottom{padding:8px 12px 10px;display:flex;align-items:center;justify-content:space-between}
+.input-tools{display:flex;align-items:center;gap:6px}
+.input-tool{width:28px;height:28px;border-radius:7px;background:var(--orange-light);display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid #fde0c0}
+.input-tool svg{width:14px;height:14px}
+.input-tool-text{font-size:11px;color:var(--text-secondary);padding:4px 8px;border-radius:7px;background:#f5f0e8;cursor:pointer}
+.input-model{font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:4px;cursor:pointer;padding:4px 8px;border-radius:7px}
+.input-model:hover{background:#f5f0e8}
+.input-send{width:32px;height:32px;border-radius:8px;background:var(--orange);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.input-send svg{width:15px;height:15px;fill:white}
+.model-dot{width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,#f9a262,#e8802a)}
+
+.quick-btns{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;justify-content:center}
+.quick-btn{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:20px;background:white;border:1px solid var(--border);font-size:12px;color:var(--text-secondary);cursor:pointer;transition:all 0.12s}
+.quick-btn:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-light)}
+.quick-btn.active{background:var(--orange);color:white;border-color:var(--orange)}
+.quick-btn svg{width:13px;height:13px;stroke:currentColor;fill:none}
+
+/* Right panel */
+.right-panel{width:240px;background:var(--right-bg);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.right-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 12px}
+.right-tab{flex:1;padding:11px 0;font-size:12px;text-align:center;cursor:pointer;color:var(--text-secondary);border-bottom:2px solid transparent;transition:all 0.12s}
+.right-tab.active{color:var(--orange);border-bottom-color:var(--orange);font-weight:500}
+.right-panel-tools{padding:8px 12px;display:flex;align-items:center;justify-content:space-between}
+.right-panel-tools span{font-size:12px;color:var(--text-secondary)}
+.right-panel-tools .icons{display:flex;gap:6px}
+.right-panel-tools .icons svg{width:15px;height:15px;stroke:var(--text-hint);cursor:pointer}
+.file-tree{padding:4px 8px;overflow-y:auto;flex:1}
+.folder{display:flex;align-items:center;gap:5px;padding:5px 6px;cursor:pointer;border-radius:6px;font-size:12px;color:var(--text-secondary)}
+.folder:hover{background:#f5f0e8}
+.folder-icon{width:15px;height:15px;background:#f9a262;border-radius:3px;flex-shrink:0}
+.folder-icon.blue{background:#4a7cdc}
+.file-item{display:flex;align-items:center;gap:5px;padding:4px 6px 4px 22px;cursor:pointer;border-radius:6px;font-size:11px;color:var(--text-secondary)}
+.file-item:hover{background:#f5f0e8}
+.file-dot{width:10px;height:10px;background:#e8f0fe;border:1px solid #4a7cdc;border-radius:2px;flex-shrink:0}
+.file-dot.md{background:#e8f8f0;border-color:#2db87a}
+
+/* Overlay System */
+.overlay{position:fixed;inset:0;z-index:100;display:none}
+.overlay.active{display:flex}
+
+/* Mask - 遮罩层用于Phase 0/2/3/4，不用于Phase 1聚光灯 */
+.mask{position:absolute;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);z-index:100;pointer-events:auto}
+
+/* 聚光灯专用遮罩 - Phase 1不使用普通mask */
+#p1.active ~ .mask,
+#p1 .mask{
+  background:transparent;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+
+/* 聚光灯遮罩层 - 在spotlight外部创建暗化效果 */
+.spotlight-mask{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  z-index:101;
+  pointer-events:auto;
+}
+
+/* 聚光灯样式 - 聚焦区域完全清晰，外部暗化 */
+.spotlight{
+  position:absolute;
+  border-radius:12px;
+  z-index:102;
+  pointer-events:none;
+  transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
+  /* 透明中心 + 外部暗化效果 */
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,0.9),
+    0 0 0 4px rgba(240,124,53,0.3),
+    0 0 0 9999px rgba(0,0,0,0.65);
+  background:transparent;
+}
+.spotlight::before{
+  content:'';
+  position:absolute;
+  inset:-4px;
+  border-radius:16px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.4),rgba(255,255,255,0.1));
+  pointer-events:none;
+}
+
+/* 聚光灯内的目标元素 - 强制保持清晰 */
+.spotlight ~ #tooltipCard,
+.spotlight ~ #numLabel{
+  z-index:103;
+}
+
+/* 聚光灯区域内元素保持清晰 */
+#p1.active .spotlight + .tooltip-card{
+  z-index:103;
+}
+
+/* 确保聚光灯内的UI元素不被任何滤镜影响 */
+#p1.active #sidebar .nav-item.active,
+#p1.active #inputToolUpload,
+#p1.active #quickBtns,
+#p1.active #modelSelector,
+#p1.active #tab-all,
+#p1.active #tab-changed,
+#p1.active [id^="nav-"]{
+  position:relative;
+  z-index:105 !important;
+}
+
+/* Tooltip卡片始终在最上层 */
+.tooltip-card{z-index:110 !important}
+
+/* Step indicator - 确保在最上层 */
+.step-indicator{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);z-index:250;display:flex;align-items:center;gap:8px;background:white;border-radius:99px;padding:8px 16px;box-shadow:0 4px 20px rgba(0,0,0,0.15)}
+.dot{width:8px;height:8px;border-radius:50%;background:#e0dbd0;transition:all 0.2s}
+.dot.active{width:24px;border-radius:4px;background:var(--orange)}
+.dot.done{background:var(--orange);opacity:0.4}
+
+/* ===== PHASE 0: Welcome ===== */
+#p0{align-items:center;justify-content:center}
+.welcome-card{position:relative;z-index:110;background:white;border-radius:20px;width:480px;padding:32px;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+.welcome-logo{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.welcome-logo .wl-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#5b8ef0,#3d6be0);display:flex;align-items:center;justify-content:center}
+.welcome-logo .wl-icon svg{width:22px;height:22px;fill:white}
+.welcome-logo .wl-name{font-size:18px;font-weight:700;color:var(--text-primary)}
+.welcome-badge{display:inline-block;font-size:11px;font-weight:500;background:var(--orange-light);color:var(--orange);padding:4px 10px;border-radius:99px;border:1px solid #fde0c0;margin-bottom:12px}
+.welcome-title{font-size:24px;font-weight:700;color:var(--text-primary);margin-bottom:10px;line-height:1.3}
+.welcome-sub{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.welcome-features{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.wf-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 10px;background:#faf8f4;border-radius:10px;border:1px solid var(--border)}
+.wf-icon{font-size:22px}
+.wf-text{font-size:12px;color:var(--text-secondary)}
+.welcome-btns{display:flex;gap:10px;margin-bottom:12px}
+.welcome-hint{font-size:12px;color:var(--text-hint);text-align:center;padding-top:8px;border-top:1px dashed var(--border)}
+.btn-primary{flex:1;padding:11px;border-radius:10px;background:var(--orange);color:white;border:none;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:background 0.15s}
+.btn-primary:hover{background:#e06a20}
+.btn-secondary{flex:1;padding:11px;border-radius:10px;background:#f5f0e8;color:var(--text-secondary);border:1px solid var(--border);font-size:13px;cursor:pointer;font-family:inherit}
+.btn-secondary:hover{background:#ede8de}
+
+/* ===== PHASE 1: Spotlight tooltips ===== */
+#p1{pointer-events:none}
+#p1.active{pointer-events:auto}
+
+/* 聚光灯样式 - 聚焦区域清晰，外部虚化变暗 */
+.spotlight{position:absolute;border-radius:12px;z-index:105;pointer-events:none;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);box-shadow:0 0 0 9999px rgba(0,0,0,0.65);background:transparent;backdrop-filter:none;border:2px solid rgba(255,255,255,0.8)}
+.spotlight::before{content:'';position:absolute;inset:-4px;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,0.3),rgba(255,255,255,0.1));pointer-events:none}
+
+.tooltip-card{position:absolute;z-index:115;background:white;border-radius:14px;width:300px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,0.18);pointer-events:auto;animation:slideIn 0.25s ease}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* 模块进度条 */
+.tooltip-module-progress{display:flex;gap:4px;margin-bottom:14px}
+.tooltip-module-progress .tmp-dot{width:20px;height:4px;border-radius:2px;background:#e0dbd0}
+.tooltip-module-progress .tmp-dot.active{background:var(--orange)}
+.tooltip-module-progress .tmp-dot.done{background:var(--orange);opacity:0.4}
+
+/* 组标签 */
+.tooltip-group-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;padding:2px 8px;border-radius:4px;display:inline-block}
+.tooltip-group-label.toolbox{background:var(--orange-light);color:var(--orange)}
+.tooltip-group-label.workspace{background:#e8f0fe;color:var(--blue)}
+.tooltip-group-label.doclib{background:#e8f8f0;color:var(--green)}
+
+/* Tooltip图标 */
+.tooltip-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0}
+.tooltip-icon.toolbox{background:var(--orange-light);color:var(--orange)}
+.tooltip-icon.workspace{background:#e8f0fe;color:var(--blue)}
+.tooltip-icon.doclib{background:#e8f8f0;color:var(--green)}
+.tooltip-icon svg{width:20px;height:20px;stroke:currentColor;fill:none}
+
+.tooltip-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.tooltip-title{font-size:15px;font-weight:700;color:var(--text-primary)}
+.tooltip-step{font-size:11px;font-weight:500;background:var(--orange-light);color:var(--orange);padding:2px 8px;border-radius:99px;border:1px solid #fde0c0}
+.tooltip-item-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
+.tooltip-btns{display:flex;align-items:center;justify-content:space-between;margin-top:16px}
+.t-btn-next{padding:8px 20px;border-radius:8px;background:var(--orange);color:white;border:none;font-size:12px;cursor:pointer;font-family:inherit;font-weight:500}
+.t-btn-next:hover{background:#e06a20}
+.t-btn-skip{font-size:11px;color:var(--text-hint);cursor:pointer;text-decoration:underline}
+
+/* Numbered labels - 确保数字居中 */
+.num-label{position:absolute;z-index:108;width:28px;height:28px;border-radius:50%;background:var(--orange);color:white;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.2);pointer-events:none;animation:pulse 1.5s infinite;line-height:1}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(240,124,53,0.6)}70%{box-shadow:0 0 0 10px rgba(240,124,53,0)}100%{box-shadow:0 0 0 0 rgba(240,124,53,0)}}
+
+/* ===== PHASE 2: Scene selector ===== */
+#p2{align-items:center;justify-content:center}
+.scene-card{position:relative;z-index:110;background:white;border-radius:20px;width:560px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.scene-card h2{font-size:20px;font-weight:700;color:var(--text-primary);margin-bottom:6px}
+.scene-card .sc-sub{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:18px}
+.scene-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}
+.scene-item{border:1.5px solid var(--border);border-radius:11px;padding:12px;cursor:pointer;transition:all 0.15s;background:white}
+.scene-item:hover{border-color:var(--orange);background:var(--orange-light)}
+.scene-item.selected{border-color:var(--orange);background:var(--orange-light);box-shadow:0 0 0 3px rgba(240,124,53,0.12)}
+.scene-item.dashed{border-style:dashed;opacity:0.55;cursor:default}
+.scene-item.dashed:hover{border-color:var(--border);background:white}
+.si-icon{font-size:18px;margin-bottom:5px}
+.si-name{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:3px}
+.si-desc{font-size:11px;color:var(--text-secondary);line-height:1.4}
+.scene-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.scene-tag{font-size:9px;color:var(--orange);background:var(--orange-light);padding:2px 6px;border-radius:4px;border:1px solid #fde0c0}
+.scene-footer{display:flex;align-items:center;justify-content:space-between}
+.scene-skip{font-size:12px;color:var(--text-hint);cursor:pointer;text-decoration:underline}
+.scene-confirm{padding:10px 28px;border-radius:10px;background:var(--orange);color:white;border:none;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+.scene-confirm:disabled{background:#e0dbd0;cursor:not-allowed}
+.scene-confirm:not(:disabled):hover{background:#e06a20}
+
+/* Scene changed toast */
+.scene-toast{position:fixed;top:60px;left:50%;transform:translateX(-50%);z-index:300;background:white;border-radius:10px;padding:10px 18px;box-shadow:0 4px 20px rgba(0,0,0,0.15);border:1px solid var(--border);font-size:13px;color:var(--text-primary);animation:toastIn 0.25s ease;display:none}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.scene-toast .t-check{width:18px;height:18px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;margin-right:6px;display:inline-flex;vertical-align:middle}
+.scene-toast .t-check svg{width:10px;height:10px;stroke:white;fill:none}
+
+/* ===== PHASE 3: Main Usage Guide ===== */
+#p3{align-items:center;justify-content:center}
+.usage-guide-card{position:relative;z-index:110;background:white;border-radius:20px;width:480px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.usage-guide-card h3{font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.usage-guide-card h3 svg{width:24px;height:24px;stroke:var(--orange);fill:none}
+.usage-guide-card .ugc-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.usage-preview{background:#faf8f4;border-radius:12px;padding:16px;margin-bottom:20px;border:1px solid var(--border)}
+.usage-preview .ug-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px dashed var(--border)}
+.usage-preview .ug-item:last-child{border-bottom:none}
+.usage-preview .ug-icon{width:36px;height:36px;border-radius:8px;background:white;border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.usage-preview .ug-icon svg{width:18px;height:18px;stroke:var(--orange)}
+.usage-preview .ug-text{flex:1}
+.usage-preview .ug-text .ug-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px}
+.usage-preview .ug-text .ug-sub{font-size:11px;color:var(--text-secondary)}
+.usage-btns{display:flex;gap:10px}
+.usage-btns button{flex:1;padding:11px;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+.usage-btns .btn-primary{background:var(--orange);color:white;border:none}
+.usage-btns .btn-primary:hover{background:#e06a20}
+.usage-btns .btn-secondary{background:#f5f0e8;color:var(--text-secondary);border:1px solid var(--border)}
+
+/* ===== PHASE 4: Task Guide ===== */
+#p4{align-items:center;justify-content:center}
+.task-guide-card{position:relative;z-index:110;background:white;border-radius:20px;width:420px;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,0.2);animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1)}
+.task-guide-card h3{font-size:18px;font-weight:700;color:var(--text-primary);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.task-guide-card h3 svg{width:24px;height:24px;stroke:var(--orange);fill:none}
+.task-guide-card .tgc-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.task-guide-preview{background:#faf8f4;border-radius:12px;padding:16px;margin-bottom:20px;border:1px solid var(--border)}
+.task-guide-preview .preview-header{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px dashed var(--border)}
+.task-guide-preview .preview-header svg{width:18px;height:18px;stroke:var(--orange)}
+.task-guide-preview .preview-header span{font-size:12px;font-weight:600;color:var(--text-primary)}
+.task-guide-preview .preview-item{display:flex;align-items:center;gap:8px;padding:8px 0;font-size:12px;color:var(--text-secondary)}
+.task-guide-preview .preview-item svg{width:14px;height:14px;stroke:var(--green)}
+.task-guide-preview .preview-item.done{color:var(--text-hint);text-decoration:line-through}
+.task-guide-btns{display:flex;gap:10px}
+.task-guide-btns button{flex:1;padding:11px;border-radius:10px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+.task-guide-btns .btn-primary{background:var(--orange);color:white;border:none}
+.task-guide-btns .btn-primary:hover{background:#e06a20}
+.task-guide-btns .btn-secondary{background:#f5f0e8;color:var(--text-secondary);border:1px solid var(--border)}
+
+/* ===== 场景切换提示（完成对话后显示） ===== */
+.scene-switch-hint{position:fixed;top:60px;right:24px;z-index:300;background:white;border-radius:12px;padding:16px 20px;box-shadow:0 8px 32px rgba(0,0,0,0.2);border:1px solid var(--border);width:320px;animation:slideInRight 0.4s cubic-bezier(0.34,1.56,0.64,1);display:none}
+.scene-switch-hint h4{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.scene-switch-hint h4 svg{width:18px;height:18px;stroke:var(--orange)}
+.scene-switch-hint p{font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px}
+.scene-switch-hint .hint-btns{display:flex;gap:8px}
+.scene-switch-hint .hint-btn{flex:1;padding:8px 12px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;border:none}
+.scene-switch-hint .hint-btn.primary{background:var(--orange);color:white}
+.scene-switch-hint .hint-btn.secondary{background:#f5f0e8;color:var(--text-secondary);border:1px solid var(--border)}
+
+/* Achievement toast */
+.achievement{position:fixed;top:60px;right:24px;z-index:300;background:white;border-radius:12px;padding:14px 18px;box-shadow:0 4px 24px rgba(0,0,0,0.15);border:1px solid var(--border);width:280px;animation:slideInRight 0.3s cubic-bezier(0.34,1.56,0.64,1);display:none}
+@keyframes slideInRight{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.ach-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.ach-sub{font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:10px}
+.ach-link{display:flex;align-items:center;justify-content:space-between;background:#faf8f4;border-radius:7px;padding:7px 10px;cursor:pointer;border:1px solid var(--border)}
+.ach-link:hover{border-color:var(--orange);background:var(--orange-light)}
+.ach-link span{font-size:12px;color:var(--text-primary)}
+.ach-link svg{width:13px;height:13px;stroke:var(--text-secondary)}
+
+/* Tips ball - 调整层级 */
+.tips-btn{position:fixed;bottom:28px;right:24px;z-index:90;width:44px;height:44px;border-radius:50%;background:var(--orange);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(240,124,53,0.4);transition:transform 0.2s}
+.tips-btn:hover{transform:scale(1.08)}
+.tips-btn svg{width:20px;height:20px;fill:none;stroke:white}
+.tips-panel{position:fixed;bottom:82px;right:24px;z-index:95;width:340px;background:white;border-radius:16px;border:1px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,0.15);display:none;animation:popIn 0.25s ease;overflow:hidden}
+.tips-head{padding:16px 18px 12px;border-bottom:1px solid var(--border)}
+.tips-head h3{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:2px}
+.tips-head p{font-size:12px;color:var(--text-secondary)}
+.tips-cats{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--border);overflow-x:auto}
+.cat-tab{padding:4px 12px;border-radius:99px;font-size:11px;cursor:pointer;white-space:nowrap;border:1px solid var(--border);color:var(--text-secondary);transition:all 0.12s;flex-shrink:0}
+.cat-tab.active{background:var(--orange-light);border-color:#fde0c0;color:var(--orange)}
+.tips-content{padding:12px 14px;max-height:340px;overflow-y:auto}
+.tip-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.tip-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+.tip-q{font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px;display:flex;align-items:flex-start;gap:6px}
+.tip-q .tq-num{width:16px;height:16px;border-radius:50%;background:var(--orange-light);border:1px solid #fde0c0;color:var(--orange);font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.tip-a{font-size:11px;color:var(--text-secondary);line-height:1.6;padding-left:22px}
+.tip-example{background:#faf8f4;border-radius:7px;padding:7px 10px;margin-top:6px;font-size:11px;color:var(--text-secondary);line-height:1.5;border:1px solid var(--border)}
+.tip-example .ex-label{font-size:10px;color:var(--orange);font-weight:500;margin-bottom:2px}
+.tips-footer{padding:10px 14px;border-top:1px solid var(--border);display:flex;justify-content:flex-end}
+.tips-close{font-size:12px;color:var(--text-hint);cursor:pointer;padding:5px 12px;border-radius:7px;border:1px solid var(--border)}
+.tips-close:hover{background:#f5f0e8}
+
+/* Task Hint - 调整位置避免遮挡 */
+.task-hint{position:fixed;left:240px;bottom:120px;z-index:90;background:white;border-radius:12px;padding:14px 18px;box-shadow:0 8px 30px rgba(0,0,0,0.15);border:1px solid var(--border);width:260px;animation:slideUp 0.4s cubic-bezier(0.34,1.56,0.64,1);display:none}
+.task-hint::before{content:'';position:absolute;left:-8px;bottom:20px;width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid white;filter:drop-shadow(-1px 0 0 var(--border))}
+.task-hint-title{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.task-hint-title svg{width:16px;height:16px;stroke:var(--orange);fill:none}
+.task-hint-text{font-size:12px;color:var(--text-secondary);line-height:1.5;margin-bottom:10px}
+.task-hint-btn{padding:8px 16px;border-radius:8px;background:var(--orange-light);color:var(--orange);border:1px solid #fde0c0;font-size:12px;font-weight:500;cursor:pointer;display:inline-block}
+.task-hint-btn:hover{background:#fde0c0}
+.task-hint-close{position:absolute;top:8px;right:8px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-hint);border-radius:4px}
+.task-hint-close:hover{background:#f5f0e8}
+.task-hint-close svg{width:14px;height:14px;stroke:currentColor}
+.task-section{margin-top:4px}
+.task-entry{display:flex;align-items:center;gap:7px;padding:5px 14px;font-size:12px;color:var(--text-secondary);cursor:pointer;border-radius:6px;margin:0 4px}
+.task-entry.pulse{animation:entryPulse 2s ease}
+@keyframes entryPulse{0%{box-shadow:0 0 0 0 rgba(240,124,53,0.4)}50%{box-shadow:0 0 0 8px rgba(240,124,53,0)}100%{box-shadow:0 0 0 0 rgba(240,124,53,0)}}
+.task-progress{display:inline-flex;align-items:center;gap:3px;background:var(--orange-light);border:1px solid #fde0c0;color:var(--orange);font-size:10px;padding:1px 6px;border-radius:99px;margin-left:auto}
+.task-panel{position:fixed;left:var(--sidebar-w);bottom:0;width:260px;background:white;border:1px solid var(--border);border-radius:12px 12px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,0.1);z-index:85;display:none;animation:slideUp 0.25s ease}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.task-panel-head{padding:14px 16px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.task-panel-head h4{font-size:13px;font-weight:700;color:var(--text-primary)}
+.task-panel-head .close{cursor:pointer;color:var(--text-hint)}
+.task-panel-head .close svg{width:16px;height:16px;stroke:currentColor;fill:none}
+.task-bar{height:3px;background:#f0ebe0;border-radius:99px;margin:0 16px 12px;overflow:hidden}
+.task-bar-fill{height:100%;background:var(--orange);border-radius:99px;transition:width 0.4s}
+.task-list-item{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer}
+.tli-check{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.tli-check.done{background:var(--green);border-color:var(--green)}
+.tli-check.done svg{width:8px;height:8px;stroke:white;fill:none}
+.tli-text{font-size:12px;color:var(--text-secondary)}
+.tli-text.done{text-decoration:line-through;opacity:0.6}
+
+/* Suggest card - 调整层级 */
+.suggest-card{position:absolute;bottom:calc(100% + 10px);left:0;right:0;max-width:680px;margin:0 auto;background:white;border-radius:14px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.1);padding:14px 16px;z-index:50;animation:slideIn 0.2s ease;display:none}
+.suggest-title{font-size:12px;color:var(--text-secondary);margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.suggest-title svg{width:13px;height:13px;stroke:var(--orange);fill:none}
+.suggest-items{display:flex;flex-direction:column;gap:6px}
+.suggest-item{background:#faf8f4;border:1px solid var(--border);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--text-primary);cursor:pointer;line-height:1.5;transition:all 0.12s}
+.suggest-item:hover{border-color:var(--orange);background:var(--orange-light);color:var(--orange)}
+.suggest-footer{font-size:11px;color:var(--text-hint);margin-top:8px}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ========== APP UI ========== -->
+<div class="app" id="appShell">
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-logo"><div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><span class="logo-text">蓝耘天衍</span></div>
+    <div class="sidebar-nav">
+      <div class="nav-item" id="nav-new"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>新建对话</div>
+      <div class="nav-item" id="nav-skill"><svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>技能市场</div>
+      <div class="nav-item" id="nav-schedule"><svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>定时任务</div>
+      <div class="nav-item" id="nav-search"><svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>搜索对话</div>
+    </div>
+    <div class="sidebar-section"><span>长期计划</span><svg class="plus" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+    <div class="plan-item">AI产品经理半月学习计划</div>
+    <div class="sidebar-section"><span>最近对话</span></div>
+    <div class="history-item timed">[定时任务] AI产品经理培养计划</div>
+    <div class="history-item">蚂蟆节非遗数字化论文审阅</div>
+    <div class="history-item">协助审阅期刊论文</div>
+    <div class="task-section hidden" id="taskEntry">
+      <div class="sidebar-section"><span>新手任务</span></div>
+      <div class="task-entry" onclick="toggleTaskPanel()">
+        <svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        任务清单
+        <span class="task-progress" id="taskProgress">2/5</span>
+      </div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-bottom-btn"><svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>我的</div>
+      <div class="sidebar-bottom-btn" id="settingsBtn"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 15a3 3 0 100-6 3 3 0 000 6z"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09A1.65 1.65 0 0016 4.68a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09A1.65 1.65 0 0019.4 15z"/></svg>设置</div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="tabs">
+      <div class="tab"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>新对话</div>
+      <div class="tab active"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>新对话<span class="close"><svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+      <div class="tab-add"><svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+      <div class="tab-right"><div class="tab-icon-btn"><svg width="14" height="14" viewBox="0 0 24 24" stroke="#f07c35" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div></div>
+    </div>
+    <div class="chat-area" id="chatArea">
+      <div class="greeting" id="greeting">早上好，开始我们的工作吧！</div>
+      <div style="position:relative;width:100%;max-width:680px">
+        <div class="suggest-card" id="suggestCard">
+          <div class="suggest-title"><svg viewBox="0 0 24 24"><path d="M9 18h6M12 2a7 7 0 017 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 01-2 2H10a2 2 0 01-2-2v-2.26A7 7 0 0112 2z"/></svg>试试直接发这条消息，一键填入输入框</div>
+          <div class="suggest-items" id="suggestItems"></div>
+          <div class="suggest-footer">这个提示只在前 3 次对话显示，之后自动消失</div>
+        </div>
+        <div class="input-wrap" id="inputWrap">
+          <div class="input-top"><textarea id="inputBox" placeholder="可以向我任意提问" rows="2"></textarea></div>
+          <div class="input-bottom">
+            <div class="input-tools">
+              <div class="input-tool" id="inputToolUpload"><svg viewBox="0 0 24 24" stroke="#f07c35" fill="none" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div>
+              <div class="input-tool-text">● 中</div>
+              <div class="input-tool" style="position:relative"><svg viewBox="0 0 24 24" stroke="#f07c35" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg><div style="position:absolute;top:-5px;right:-5px;width:14px;height:14px;background:var(--orange);border-radius:50%;font-size:9px;color:white;display:flex;align-items:center;justify-content:center;border:1.5px solid white">1</div></div>
+              <div class="input-tool"><svg viewBox="0 0 24 24" stroke="#f07c35" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+              <div class="input-tool-text">📁 lytyxue ∨</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px">
+              <div class="input-model" id="modelSelector"><div class="model-dot"></div>MiniMax M2.5 ∨</div>
+              <div class="input-send" onclick="handleSend()"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="quick-btns" id="quickBtns">
+        <div class="quick-btn" id="quick-create"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M17 3a2.828 2.828 0 114 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>创建技能</div>
+        <div class="quick-btn" id="quick-write"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>写作</div>
+        <div class="quick-btn" id="quick-ppt"><svg viewBox="0 0 24 24" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>PPT</div>
+        <div class="quick-btn" id="quick-research"><svg viewBox="0 0 24 24" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>调研报告</div>
+        <div class="quick-btn" id="quick-code"><svg viewBox="0 0 24 24" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>编程</div>
+        <div class="quick-btn" id="quick-excel"><svg viewBox="0 0 24 24" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>Excel</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right panel -->
+  <div class="right-panel" id="rightPanel">
+    <div class="right-tabs">
+      <div class="right-tab active" id="tab-all">全部文件</div>
+      <div class="right-tab" id="tab-changed">变动文件</div>
+    </div>
+    <div class="right-panel-tools"><span id="panelTitle">个人知识库</span><div class="icons"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div></div>
+    <div class="file-tree" id="fileTree">
+      <div class="folder"><div class="folder-icon"></div>工作文档</div>
+      <div class="file-item"><div class="file-dot docx"></div>竞品分析报告.docx</div>
+      <div class="file-item"><div class="file-dot pdf"></div>行业白皮书.pdf</div>
+      <div class="folder"><div class="folder-icon blue"></div>研究资料</div>
+      <div class="file-item"><div class="file-dot md"></div>会议纪要.md</div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== OVERLAYS ========== -->
+<!-- Phase 0: Welcome -->
+<div class="overlay" id="p0"><div class="mask"></div>
+  <div class="welcome-card">
+    <div class="welcome-logo"><div class="wl-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><span class="wl-name">蓝耘天衍</span></div>
+    <div class="welcome-badge">V2.0 全新发布</div>
+    <div class="welcome-title">你的 AI 办公助手</div>
+    <div class="welcome-sub">蓝耘天衍是专为企业办公打造的 AI 平台，覆盖写作、数据分析、PPT 制作、文档处理等核心场景。通过场景化模板和技能市场，让 AI 真正适配你的工作方式。</div>
+    <div class="welcome-features">
+      <div class="wf-item"><span class="wf-icon">📝</span><span class="wf-text">智能写作</span></div>
+      <div class="wf-item"><span class="wf-icon">📊</span><span class="wf-text">数据分析</span></div>
+      <div class="wf-item"><span class="wf-icon">📑</span><span class="wf-text">PPT 制作</span></div>
+      <div class="wf-item"><span class="wf-icon">📁</span><span class="wf-text">文档处理</span></div>
+    </div>
+    <div class="welcome-btns"><button class="btn-primary" onclick="startGuide()">开始引导（约 2 分钟）</button><button class="btn-secondary" onclick="skipAll()">跳过，直接开始</button></div>
+    <div class="welcome-hint">💡 完成后可解锁新手任务，获取进阶技巧</div>
+  </div>
+</div>
+
+<!-- Phase 1: Spotlight Guide -->
+<div class="overlay" id="p1"><div class="mask"></div>
+  <div class="spotlight" id="spotlight"></div>
+  <div class="tooltip-card" id="tooltipCard"></div>
+  <div class="num-label" id="numLabel" style="display:none">1</div>
+</div>
+
+<!-- Phase 2: Scene Selector -->
+<div class="overlay" id="p2"><div class="mask"></div>
+  <div class="scene-card">
+    <h2>选择你的主场景</h2>
+    <p class="sc-sub">不同场景下，AI 的提示词和回答风格会自动匹配你的工作。随时可以在「设置 → 场景模板」里切换。</p>
+    <div class="scene-grid">
+      <div class="scene-item" onclick="selectScene(this,'通用助手')"><div class="si-icon">🧩</div><div class="si-name">通用助手</div><div class="si-desc">日常写作、问答、综合办公。不确定选哪个？先从这里开始。</div><div class="scene-tags"><span class="scene-tag">写作</span><span class="scene-tag">PPT</span><span class="scene-tag">调研</span></div></div>
+      <div class="scene-item" onclick="selectScene(this,'运营助手')"><div class="si-icon">📣</div><div class="si-name">运营助手</div><div class="si-desc">内容运营、社交媒体、市场推广。三分钟生成十个差异化选题。</div><div class="scene-tags"><span class="scene-tag">文案</span><span class="scene-tag">数据分析</span><span class="scene-tag">选题</span></div></div>
+      <div class="scene-item" onclick="selectScene(this,'客服专员')"><div class="si-icon">🎧</div><div class="si-name">客服专员</div><div class="si-desc">智能客服场景，高效处理用户咨询与投诉，一键生成报表。</div><div class="scene-tags"><span class="scene-tag">客询回复</span><span class="scene-tag">知识库</span><span class="scene-tag">报表</span></div></div>
+      <div class="scene-item" onclick="selectScene(this,'科研助理')"><div class="si-icon">🔬</div><div class="si-name">科研助理</div><div class="si-desc">文献调研、论文写作与数据分析。一个下午完成原本周末的工作。</div><div class="scene-tags"><span class="scene-tag">文献</span><span class="scene-tag">论文</span><span class="scene-tag">数据分析</span></div></div>
+      <div class="scene-item" onclick="selectScene(this,'产研助手')"><div class="si-icon">🚀</div><div class="si-name">产研助手</div><div class="si-desc">产品全生命周期，从立项、调研、设计到开发测试上线。</div><div class="scene-tags"><span class="scene-tag">立项</span><span class="scene-tag">调研</span><span class="scene-tag">设计</span></div></div>
+      <div class="scene-item dashed"><div class="si-icon">＋</div><div class="si-name">更多场景</div><div class="si-desc">前往「设置 → 场景模板」探索</div></div>
+    </div>
+    <div class="scene-footer"><span class="scene-skip" onclick="confirmScene(true)">还不确定？先用通用模式 →</span><button class="scene-confirm" id="sceneConfirm" onclick="confirmScene()" disabled>确认，进入天衍</button></div>
+  </div>
+</div>
+
+<!-- Phase 3: Main Usage Guide -->
+<div class="overlay" id="p3"><div class="mask"></div>
+  <div class="usage-guide-card">
+    <h3><svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M12 7v5l3 3"/></svg>开始使用天衍</h3>
+    <div class="ugc-desc">场景已设置完成！现在你可以：</div>
+    <div class="usage-preview">
+      <div class="ug-item">
+        <div class="ug-icon"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+        <div class="ug-text">
+          <div class="ug-title">在输入框提问</div>
+          <div class="ug-sub">直接输入问题或上传文件，AI 会根据你的场景自动调整回答风格</div>
+        </div>
+      </div>
+      <div class="ug-item">
+        <div class="ug-icon"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+        <div class="ug-text">
+          <div class="ug-title">使用快捷指令</div>
+          <div class="ug-sub">点击下方快捷按钮，一键进入专业模式</div>
+        </div>
+      </div>
+      <div class="ug-item">
+        <div class="ug-icon"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+        <div class="ug-text">
+          <div class="ug-title">后续随时切换场景</div>
+          <div class="ug-sub">完成一次对话后，我们会提示你如何切换场景模板</div>
+        </div>
+      </div>
+    </div>
+    <div class="usage-btns">
+      <button class="btn-primary" onclick="finishUsageGuide()" style="background:var(--orange);color:white;border:none;width:100%">开始使用</button>
+    </div>
+  </div>
+</div>
+
+<!-- Phase 4: Task Guide -->
+<div class="overlay" id="p4"><div class="mask"></div>
+  <div class="task-guide-card">
+    <h3><svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>解锁新手任务清单</h3>
+    <div class="tgc-desc">左侧边栏新增了「新手任务」入口！按步骤完成任务，快速掌握天衍的进阶功能。</div>
+    <div class="task-guide-preview">
+      <div class="preview-header">
+        <svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>新手任务 · 2/5 已完成</span>
+      </div>
+      <div class="preview-item done"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>完成第一次 AI 对话</div>
+      <div class="preview-item done"><svg viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>选择一个场景模板</div>
+      <div class="preview-item">○ 上传一个文件并在对话里引用它</div>
+      <div class="preview-item">○ 去技能市场添加一个技能</div>
+      <div class="preview-item">○ 设置一个定时任务</div>
+    </div>
+    <div class="task-guide-btns">
+      <button class="btn-secondary" onclick="skipTaskGuide()">跳过</button>
+      <button class="btn-primary" onclick="finishTaskGuide()">开始使用</button>
+    </div>
+  </div>
+</div>
+
+<!-- Scene Toast -->
+<div class="scene-toast" id="sceneToast"><span class="t-check"><svg viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></span><span id="sceneToastText">已切换至「运营助手」· 快捷按钮和提示词已更新</span></div>
+
+<!-- 场景切换提示（完成对话后显示） -->
+<div class="scene-switch-hint" id="sceneSwitchHint">
+  <h4><svg viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>需要切换工作场景？</h4>
+  <p>点击左下角「设置」按钮，进入「场景模板」即可随时切换不同的 AI 工作角色。</p>
+  <div class="hint-btns">
+    <button class="hint-btn secondary" onclick="closeSceneSwitchHint()">知道了</button>
+    <button class="hint-btn primary" onclick="openSettingsFromHint()">去切换场景</button>
+  </div>
+</div>
+
+<!-- 设置界面 Overlay（独立） -->
+<div class="overlay" id="settingsOverlay" style="z-index:400">
+  <div class="mask" onclick="closeSettingsOverlay()"></div>
+  <div class="settings-container" style="position:fixed;inset:0;display:flex;z-index:410">
+    <!-- Settings Sidebar -->
+    <div class="settings-sidebar" style="width:260px;background:white;border-right:1px solid var(--border);padding:20px;overflow-y:auto">
+      <div class="settings-sidebar-header" style="display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border)">
+        <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#5b8ef0,#3d6be0);display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <span style="font-size:16px;font-weight:700">设置</span>
+      </div>
+      
+      <div class="settings-nav">
+        <div class="settings-nav-item" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <span style="font-size:14px">账户</span>
+        </div>
+        <div class="settings-nav-item" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/></svg>
+          <span style="font-size:14px">通用</span>
+        </div>
+        <div class="settings-nav-item" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span style="font-size:14px">个性化</span>
+        </div>
+        <div class="settings-nav-item active" id="sceneTemplateNavItem" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px;background:var(--orange-light);color:var(--orange);border:1px solid #fde0c0">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span style="font-size:14px;font-weight:500">场景模板</span>
+        </div>
+        <div style="height:1px;background:var(--border);margin:16px 0"></div>
+        <div style="font-size:12px;color:var(--text-hint);margin-bottom:8px;padding-left:4px">其他设置</div>
+        <div class="settings-nav-item" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+          <span style="font-size:14px">模型</span>
+        </div>
+        <div class="settings-nav-item" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <span style="font-size:14px">主题</span>
+        </div>
+        <div class="settings-nav-item" style="display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;cursor:pointer;margin-bottom:4px">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span style="font-size:14px">布局</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Settings Content -->
+    <div class="settings-content" style="flex:1;background:#faf8f4;padding:32px;overflow-y:auto">
+      <div class="settings-content-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px">
+        <h2 style="font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="var(--orange)" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          场景模板
+        </h2>
+        <button onclick="closeSettingsOverlay()" style="width:32px;height:32px;border-radius:8px;border:none;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:24px">切换不同的场景模板，智能体将自动调整技能、场景、提示词等配置以匹配对应角色。</p>
+      
+      <!-- Scene Templates Grid -->
+      <div class="scene-templates-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+        <!-- 通用助手 -->
+        <div class="scene-template-card current" style="border:2px solid var(--orange);border-radius:12px;padding:20px;background:var(--orange-light);position:relative;cursor:pointer;transition:all 0.2s">
+          <span style="position:absolute;top:12px;right:12px;font-size:11px;font-weight:600;color:var(--orange);background:white;padding:4px 10px;border-radius:99px;border:1px solid #fde0c0">当前</span>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🧙</span>
+            <span style="font-size:15px;font-weight:600">通用助手</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5">适用于日常办公与综合任务的全能助手</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">创建技能</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">写作</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">PPT</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">调研报告</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">编程</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">+2</span>
+          </div>
+        </div>
+        
+        <!-- 运营助手 -->
+        <div class="scene-template-card" style="border:1.5px solid var(--border);border-radius:12px;padding:20px;background:white;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="selectSceneTemplate(this,'运营助手')">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">📣</span>
+            <span style="font-size:15px;font-weight:600">运营助手</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5">专为内容运营、社交媒体和市场推广打造的智能体</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">文案创作</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">数据分析</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">运营设计</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">运营表格</span>
+          </div>
+        </div>
+        
+        <!-- 客服专员 -->
+        <div class="scene-template-card" style="border:1.5px solid var(--border);border-radius:12px;padding:20px;background:white;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="selectSceneTemplate(this,'客服专员')">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🎧</span>
+            <span style="font-size:15px;font-weight:600">客服专员</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5">智能客服场景，高效处理用户咨询与投诉</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">客诉回复</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">知识库</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">客情分析</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">报表</span>
+          </div>
+        </div>
+        
+        <!-- 科研助理 -->
+        <div class="scene-template-card" style="border:1.5px solid var(--border);border-radius:12px;padding:20px;background:white;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="selectSceneTemplate(this,'科研助理')">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🔬</span>
+            <span style="font-size:15px;font-weight:600">科研助理</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5">面向高校科研场景，辅助文献调研、论文写作与数据分析</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">文献综述</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">论文写作</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">数据分析</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">课题申报</span>
+          </div>
+        </div>
+        
+        <!-- 产研助手 -->
+        <div class="scene-template-card" style="border:1.5px solid var(--border);border-radius:12px;padding:20px;background:white;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="selectSceneTemplate(this,'产研助手')">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🚀</span>
+            <span style="font-size:15px;font-weight:600">产研助手</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5">面向产品经理与开发技术人员，覆盖全生命周期</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">立项规划</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">调研分析</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">产品设计</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">+3</span>
+          </div>
+        </div>
+        
+        <!-- 行政助手 -->
+        <div class="scene-template-card" style="border:1.5px solid var(--border);border-radius:12px;padding:20px;background:white;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="selectSceneTemplate(this,'行政助手')">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+            <span style="font-size:28px">🏢</span>
+            <span style="font-size:15px;font-weight:600">行政助手</span>
+          </div>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5">企业行政办公场景，高效处理日常事务与文档</p>
+          <div style="display:flex;flex-wrap:wrap;gap:6px">
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">会议纪要</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">通知公告</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">日程安排</span>
+            <span style="font-size:11px;color:var(--text-secondary);background:#f5f0e8;padding:4px 8px;border-radius:4px">+2</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Switch Button -->
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
+        <button id="switchSceneBtn" onclick="confirmSceneSwitch()" disabled style="padding:12px 32px;border-radius:10px;background:#e0dbd0;color:white;border:none;font-size:14px;font-weight:500;cursor:not-allowed">
+          选择场景模板
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Achievement Toast -->
+<div class="achievement" id="achievement">
+  <div class="ach-title">🎉 完成了第一次 AI 对话</div>
+  <div class="ach-sub">想让天衍更懂你的工作场景？去技能市场给它装上专属能力吧。</div>
+  <div class="ach-link"><span>🛒 探索技能市场 →</span><svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+</div>
+
+<!-- Tips Button & Panel -->
+<div class="tips-btn" id="tipsBtn" onclick="toggleTips()"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg></div>
+<div class="tips-panel" id="tipsPanel">
+  <div class="tips-head"><h3>用好这几个技巧，效率翻倍</h3><p>按你当前遇到的问题找对应类别</p></div>
+  <div class="tips-cats"><div class="cat-tab active" onclick="switchCat(0,this)">说清楚</div><div class="cat-tab" onclick="switchCat(1,this)">用文件</div><div class="cat-tab" onclick="switchCat(2,this)">持续帮</div><div class="cat-tab" onclick="switchCat(3,this)">稳质量</div></div>
+  <div class="tips-content" id="tipsContent"></div>
+  <div class="tips-footer"><span class="tips-close" onclick="closeTips()">知道了，不再提示</span></div>
+</div>
+
+<!-- Task Hint -->
+<div class="task-hint" id="taskHint">
+  <div class="task-hint-close" onclick="closeTaskHint()"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+  <div class="task-hint-title"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>解锁新手任务</div>
+  <div class="task-hint-text">引导已完成！左侧边栏新增了「新手任务」入口，按步骤探索天衍的进阶功能。</div>
+  <div class="task-hint-btn" onclick="openTaskFromHint()">查看任务清单</div>
+</div>
+
+<!-- Task Panel -->
+<div class="task-panel" id="taskPanel">
+  <div class="task-panel-head"><h4>新手任务 · <span id="taskCount">2/5</span> 已完成</h4><span class="close" onclick="toggleTaskPanel()"><svg viewBox="0 0 24 24" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></span></div>
+  <div class="task-bar"><div class="task-bar-fill" id="taskBarFill" style="width:40%"></div></div>
+  <div id="taskItems"></div>
+</div>
+
+<!-- Step Indicator -->
+<div class="step-indicator hidden" id="stepIndicator">
+  <div class="dot active" id="d0"></div>
+  <div class="dot" id="d1"></div>
+  <div class="dot" id="d2"></div>
+  <div class="dot" id="d3"></div>
+</div>
+
+<script>
+// ========== 分步骤引导数据 ==========
+var currentPhase=0;
+var selectedScene='';
+var p1Step=0;
+var hasShownSceneSwitchHint=false;
+
+// 10步引导：5个工具 + 3个工作台 + 2个文档库
+var guideSteps=[
+  // 工具箱（5步）
+  {
+    group:'工具箱',
+    target:'nav-new',
+    title:'新建对话',
+    desc:'开启一次 AI 工作对话，就像找一个随叫随到的同事。写东西、查资料、处理文件都行。',
+    pos:'right'
+  },
+  {
+    group:'工具箱',
+    target:'nav-skill',
+    title:'技能市场',
+    desc:'给 AI 装载专属能力包。OCR、格式转换、飞书日历……按需取用，像搭积木一样解决复杂问题。',
+    pos:'right'
+  },
+  {
+    group:'工具箱',
+    target:'nav-schedule',
+    title:'定时任务',
+    desc:'设置让 AI 自动执行的周期任务。每天早 8 点生成行业快报、每周五汇总工作进度，你不在线，它替你盯着。',
+    pos:'right'
+  },
+  {
+    group:'工具箱',
+    target:'nav-search',
+    title:'搜索对话',
+    desc:'全文检索所有历史对话记录。上周和 AI 一起写的竞品分析，输入关键词秒找回来。',
+    pos:'right'
+  },
+  {
+    group:'工具箱',
+    target:'sidebar',
+    targetRect:{left:0,top:280,width:220,height:100},
+    title:'长期计划',
+    desc:'跨越多天的目标管理。设置目标后，AI 会在后续每次相关对话中主动追踪进度，不用每次重新交代背景。',
+    pos:'right'
+  },
+  // 工作台（3步）
+  {
+    group:'工作台',
+    target:'inputToolUpload',
+    title:'输入框 & 文件上传',
+    desc:'直接打字提问，或粘贴文档内容。也可以上传 Word、PDF、Excel，让 AI 直接处理文件内容，无需手动复制粘贴。',
+    pos:'top'
+  },
+  {
+    group:'工作台',
+    target:'quickBtns',
+    title:'快捷指令',
+    desc:'一键进入专业模式，不用自己写 Prompt。「写作」「PPT」「调研报告」「编程」「Excel」都已预设好专业提示词，点一下直接开始。',
+    pos:'bottom'
+  },
+  {
+    group:'工作台',
+    target:'modelSelector',
+    title:'模型切换',
+    desc:'右下角可以随时切换不同 AI 模型。写代码用一个、写文案用另一个，算力按需灵活调配。',
+    pos:'left'
+  },
+  // 文档库（2步）
+  {
+    group:'文档库',
+    target:'tab-all',
+    title:'全部文件',
+    desc:'你的个人工作区文档库。上传文件后，在对话里直接引用，AI 会基于文件内容多轮问答，三分钟给你出全文摘要。',
+    pos:'left'
+  },
+  {
+    group:'文档库',
+    target:'tab-changed',
+    title:'变动文件',
+    desc:'AI 最近操作或生成的文件都会出现在这里。所有操作日志全程留痕可追溯，随时可以回溯查看。',
+    pos:'left'
+  }
+];
+
+var suggestMap={
+  '通用助手':['帮我把下面这段话改写得更专业流畅：【粘贴文字】','用 5 个维度分析「AI 办公工具」的机会和风险','帮我整理这份会议纪要的核心结论：【粘贴内容】'],
+  '运营助手':['帮我写一篇关于「AI 提升工作效率」的小红书种草文，500 字左右','我需要 10 个「职场效率」方向的爆款选题','帮我把这段话改成 B 站口播脚本：【粘贴文字】'],
+  '科研助理':['帮我整理一篇「大模型 RAG 技术」的文献综述','分析我上传的论文，提取研究背景、方法和核心结论','帮我改写段落使其符合 SCI 规范：【粘贴段落】'],
+  '客服专员':['帮我写一份标准的退款投诉回复模板','整理这批用户反馈，归类出前 3 类高频问题','帮我根据产品信息生成一套常见问题 FAQ'],
+  '产研助手':['我要做「企业内部知识库工具」，帮我输出立项分析文档','帮我写一份用户访谈提纲，访谈对象是中小企业运营','把需求描述拆解成可执行的功能列表']
+};
+
+var tipsData=[
+  [
+    {q:'给 AI 一个角色，回答质量立刻不一样',a:'不要只说"帮我写一篇文章"，而是说"你是一位有 10 年经验的科技媒体编辑，帮我写一篇面向产品经理的文章"。AI 会自动调整语气和专业深度。',ex:{label:'对比',text:'普通版：帮我写延期邮件\n更好版：你是客户成功经理，帮我写邮件告知客户项目延期两周，附补救方案'}},
+    {q:'给 AI 看一个你满意的例子',a:'直接粘贴一篇写得好的文章给 AI，说"参考这个风格帮我写××"。AI 模仿例子的效果，远好于你用文字描述"我想要那种感觉"。',ex:null},
+    {q:'同时告诉 AI 你不想要什么',a:'加上"不要堆砌数据""不要超过 500 字"，AI 会少走很多弯路。',ex:null},
+    {q:'一次只交一个任务',a:'把五件事写在一条消息里，AI 会同时做但每件都做得很浅。拆开来一件一件做，每件都会好很多。',ex:null}
+  ],
+  [
+    {q:'上传文件后问具体问题，而不是"帮我总结"',a:'"这份报告里哪些数据支持了竞品的优势？"这类具体问题，才能把文件里的价值真正挖出来。',ex:null},
+    {q:'多个文件同时上传，让 AI 跨文件做对比',a:'把两份竞品报告都上传，问"对比这两份，在用户增长策略上有什么核心差异"。',ex:null},
+    {q:'Excel 数据用自然语言问，不用写公式',a:'直接问"哪个城市上个月 GMV 最高""找出退款率超过 5% 的 SKU"，AI 自动读懂表格，给出答案和图表。',ex:{label:'示例',text:'你：上月销售前三的产品是哪些？\n天衍：已生成图表，A 系列 · B 系列 · C 系列'}},
+    {q:'用 @文件名 随时调取，不用重复上传',a:'文件上传到右侧文件库后，对话里输入 @文件名，AI 就能直接引用内容作答。',ex:{label:'用法',text:'在对话里输入：@竞品分析报告.md 帮我提取用户痛点'}}
+  ],
+  [
+    {q:'在「长期计划」里设目标，AI 会主动追踪',a:'设置"本季度完成竞品分析"后，每次相关对话 AI 知道你做到哪了，不用每次交代背景。',ex:null},
+    {q:'同一对话里继续追问，比重新开对话准确',a:'同一个对话里追问，AI 能看到所有上下文。重新开对话，AI 没有背景，容易给出一样的答案。',ex:null},
+    {q:'定时任务适合一切「定期重复」的工作',a:'每周简报、每月汇总、每天待办——设置一次，天衍按时自动执行。',ex:{label:'推荐',text:'每天早 8:00 · 生成 AI 行业动态摘要\n每周五 17:00 · 汇总本周对话生成周报'}}
+  ],
+  [
+    {q:'让 AI 先列思路，你确认后再展开写',a:'在消息结尾加"先告诉我你的分析思路，我确认后再展开"。你可以在 AI 跑偏之前纠正方向。',ex:null},
+    {q:'指定输出格式，而不是让 AI 自由发挥',a:'"用结构化格式输出，包含背景、问题、解决方案、风险四部分"比"帮我整理一下"得到的结果更可用。',ex:null},
+    {q:'回答不满意，在原对话里追问更有效',a:'直接说"这里不对，改一下"比重新开对话更有效。AI 能看到上下文，知道哪里不对。',ex:null},
+    {q:'复杂任务切换能力更强的模型',a:'写长文、做分析用能力更强的模型；写短文案用快一点的模型。模型选择器在输入框右下角。',ex:null}
+  ]
+];
+
+var taskData=[
+  {text:'完成第一次 AI 对话',done:true},
+  {text:'选择一个场景模板',done:true},
+  {text:'上传一个文件并在对话里引用它',done:false},
+  {text:'去技能市场添加一个技能',done:false},
+  {text:'设置一个定时任务',done:false}
+];
+
+function init(){
+  document.getElementById('p0').classList.add('active');
+  renderTaskItems();
+  renderTipsContent(0);
+}
+
+function updateStepIndicator(step){
+  var ind=document.getElementById('stepIndicator');
+  if(step>=0){
+    ind.classList.remove('hidden');
+    ind.style.display='flex';
+  } else {
+    ind.classList.add('hidden');
+    ind.style.display='none';
+  }
+  for(var i=0;i<4;i++){
+    var d=document.getElementById('d'+i);
+    d.classList.remove('active','done');
+    if(i===step) d.classList.add('active');
+    else if(i<step) d.classList.add('done');
+  }
+}
+
+function startGuide(){
+  nextPhase(1);
+}
+
+function nextPhase(n){
+  ['p0','p1','p2','p3','p4'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+  currentPhase=n;
+  if(n===1){
+    document.getElementById('p1').classList.add('active');
+    p1Step=0;
+    renderSpotlight(0);
+    updateStepIndicator(getStepGroup(0));
+  } else if(n===2){
+    document.getElementById('p2').classList.add('active');
+    updateStepIndicator(3);
+  } else if(n===3){
+    // 主界面使用引导
+    document.getElementById('p3').classList.add('active');
+    updateStepIndicator(-1);
+  } else if(n===4){
+    // 新手任务引导
+    document.getElementById('p4').classList.add('active');
+    updateStepIndicator(-1);
+  } else if(n===5){
+    // 结束引导，进入主界面
+    updateStepIndicator(-1);
+    document.getElementById('suggestCard').style.display='block';
+    document.getElementById('taskEntry').classList.remove('hidden');
+    renderSuggest();
+    document.getElementById('tipsBtn').style.display='flex';
+    setTimeout(function(){
+      document.getElementById('taskHint').style.display='block';
+    },800);
+  }
+}
+
+function skipAll(){
+  ['p0','p1','p2','p3','p4'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+  document.getElementById('stepIndicator').classList.add('hidden');
+  document.getElementById('stepIndicator').style.display='none';
+  document.getElementById('tipsBtn').style.display='flex';
+  document.getElementById('taskEntry').classList.remove('hidden');
+  document.getElementById('suggestCard').style.display='block';
+  renderSuggest();
+}
+
+// 获取当前步骤所属的大组
+function getStepGroup(stepIdx){
+  if(stepIdx<5) return 0; // 工具箱
+  if(stepIdx<8) return 1; // 工作台
+  return 2; // 文档库
+}
+
+// 获取组内的步骤编号
+function getStepInGroup(stepIdx){
+  if(stepIdx<5) return stepIdx+1;
+  if(stepIdx<8) return stepIdx-4;
+  return stepIdx-7;
+}
+
+function getStepGroupTotal(stepIdx){
+  if(stepIdx<5) return 5;
+  if(stepIdx<8) return 3;
+  return 2;
+}
+
+function renderSpotlight(idx){
+  var data=guideSteps[idx];
+  var moduleType=data.group==='工具箱'?'toolbox':data.group==='工作台'?'workspace':'doclib';
+  
+  var rect;
+  
+  if(data.targetRect){
+    rect=data.targetRect;
+  } else {
+    var el=document.getElementById(data.target);
+    if(el){
+      var r=el.getBoundingClientRect();
+      rect={left:r.left,top:r.top,width:r.width,height:r.height};
+    } else {
+      rect={left:100,top:100,width:200,height:100};
+    }
+  }
+  
+  var sp=document.getElementById('spotlight');
+  sp.style.left=(rect.left-8)+'px';
+  sp.style.top=(rect.top-8)+'px';
+  sp.style.width=(rect.width+16)+'px';
+  sp.style.height=(rect.height+16)+'px';
+
+  // 高亮当前元素
+  document.querySelectorAll('.nav-item').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.quick-btn').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.right-tab').forEach(function(el){el.classList.remove('active')});
+  
+  var targetEl=document.getElementById(data.target);
+  if(targetEl){
+    targetEl.classList.add('active');
+  }
+
+  // 数字标签 - 确保居中显示
+  var numLabel=document.getElementById('numLabel');
+  numLabel.style.display='flex';
+  numLabel.textContent=getStepInGroup(idx);
+  numLabel.className='num-label';
+  numLabel.style.left=(rect.left-14)+'px';
+  numLabel.style.top=(rect.top-14)+'px';
+
+  // Tooltip 卡片
+  var tc=document.getElementById('tooltipCard');
+  tc.className='tooltip-card';
+  
+  // 模块内进度条
+  var groupProgress='';
+  var groupTotal=getStepGroupTotal(idx);
+  var stepInGroup=getStepInGroup(idx);
+  for(var i=1;i<=groupTotal;i++){
+    var cls='tmp-dot';
+    if(i<stepInGroup) cls+=' done';
+    else if(i===stepInGroup) cls+=' active';
+    groupProgress+='<div class="'+cls+'"></div>';
+  }
+  
+  var iconSvg=moduleType==='toolbox'?'M12 5v14M5 12h14':moduleType==='workspace'?'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4':'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4';
+  
+  var html='<div class="tooltip-module-progress">'+groupProgress+'</div>';
+  html+='<div class="tooltip-group-label '+moduleType+'">'+data.group+'</div>';
+  html+='<div class="tooltip-header">';
+  html+='<div class="tooltip-icon '+moduleType+'"><svg viewBox="0 0 24 24" stroke-width="1.5"><path d="'+iconSvg+'"/></svg></div>';
+  html+='<div class="tooltip-title">'+data.title+'</div>';
+  html+='<span class="tooltip-step">'+stepInGroup+'/'+groupTotal+'</span>';
+  html+='</div>';
+  html+='<div class="tooltip-item-desc">'+data.desc+'</div>';
+  html+='<div class="tooltip-btns">';
+  html+='<span class="t-btn-skip" onclick="skipAll()">跳过引导</span>';
+  if(idx<guideSteps.length-1){
+    html+='<button class="t-btn-next" onclick="p1Next()">下一步 →</button>';
+  } else {
+    html+='<button class="t-btn-next" onclick="nextPhase(2)">选择场景 →</button>';
+  }
+  html+='</div>';
+  tc.innerHTML=html;
+
+  // 定位 tooltip
+  var cardWidth=300;
+  var cardHeight=220;
+  var padding=20;
+  
+  if(data.pos==='right'){
+    tc.style.left=(rect.left+rect.width+padding)+'px';
+    tc.style.top=Math.max(30,Math.min(rect.top,window.innerHeight-cardHeight-30))+'px';
+  } else if(data.pos==='left'){
+    tc.style.left=(rect.left-cardWidth-padding)+'px';
+    tc.style.top=rect.top+'px';
+  } else if(data.pos==='top'){
+    tc.style.left=Math.max(30,rect.left)+'px';
+    tc.style.top=(rect.top-cardHeight-padding)+'px';
+  } else if(data.pos==='bottom'){
+    tc.style.left=rect.left+'px';
+    tc.style.top=(rect.top+rect.height+padding)+'px';
+  }
+  
+  // 确保不超出屏幕
+  var tcRect=tc.getBoundingClientRect();
+  if(tcRect.right>window.innerWidth-30){
+    tc.style.left=(window.innerWidth-cardWidth-30)+'px';
+  }
+  if(tcRect.bottom>window.innerHeight-30){
+    tc.style.top=(window.innerHeight-cardHeight-30)+'px';
+  }
+  if(tcRect.left<30){
+    tc.style.left='30px';
+  }
+  if(tcRect.top<30){
+    tc.style.top='30px';
+  }
+}
+
+function p1Next(){
+  p1Step++;
+  if(p1Step<guideSteps.length){
+    renderSpotlight(p1Step);
+    updateStepIndicator(getStepGroup(p1Step));
+  }
+}
+
+// Scene functions
+function selectScene(el,name){
+  document.querySelectorAll('.scene-item').forEach(function(i){i.classList.remove('selected')});
+  el.classList.add('selected');
+  selectedScene=name;
+  document.getElementById('sceneConfirm').disabled=false;
+}
+
+function confirmScene(skip){
+  if(skip) selectedScene='通用助手';
+  document.getElementById('p2').classList.remove('active');
+  
+  var t=document.getElementById('sceneToast');
+  document.getElementById('sceneToastText').textContent='已切换至「'+selectedScene+'」· 快捷按钮和提示词已更新';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none'},4000);
+  
+  var greetMap={'通用助手':'早上好，今天有什么需要我帮你做的？','运营助手':'早上好！今天要创作什么内容？','科研助理':'早上好，有什么文献或论文需要处理？','产研助手':'早上好，今天有什么产品研发任务？','客服专员':'早上好，有哪些用户问题需要处理？'};
+  document.getElementById('greeting').textContent=greetMap[selectedScene]||'早上好，开始我们的工作吧！';
+  
+  // 进入主界面使用引导 (Phase 3)
+  nextPhase(3);
+}
+
+// Main Usage Guide functions
+function finishUsageGuide(){
+  document.getElementById('p3').classList.remove('active');
+  nextPhase(4);
+}
+
+// Task Guide functions
+function skipTaskGuide(){
+  document.getElementById('p4').classList.remove('active');
+  nextPhase(5);
+}
+
+function finishTaskGuide(){
+  document.getElementById('p4').classList.remove('active');
+  nextPhase(5);
+}
+
+// Scene Switch Hint functions (完成对话后显示)
+function showSceneSwitchHint(){
+  if(!hasShownSceneSwitchHint){
+    document.getElementById('sceneSwitchHint').style.display='block';
+    hasShownSceneSwitchHint=true;
+  }
+}
+
+function closeSceneSwitchHint(){
+  document.getElementById('sceneSwitchHint').style.display='none';
+}
+
+var selectedSceneTemplate = '';
+
+function openSettingsFromHint(){
+  closeSceneSwitchHint();
+  // 显示设置界面
+  document.getElementById('settingsOverlay').style.display='flex';
+  document.getElementById('settingsOverlay').classList.add('active');
+  // 重置选择
+  selectedSceneTemplate = '';
+  updateSwitchButton();
+}
+
+function closeSettingsOverlay(){
+  document.getElementById('settingsOverlay').style.display='none';
+  document.getElementById('settingsOverlay').classList.remove('active');
+}
+
+function selectSceneTemplate(el, sceneName){
+  // 移除其他卡片的选中状态
+  document.querySelectorAll('.scene-template-card').forEach(function(card){
+    card.style.borderColor = 'var(--border)';
+    card.style.background = 'white';
+    card.style.borderWidth = '1.5px';
+  });
+  
+  // 标记当前选中
+  if(el.classList.contains('current')){
+    selectedSceneTemplate = ''; // 取消选择当前场景
+  } else {
+    el.style.borderColor = 'var(--orange)';
+    el.style.background = 'var(--orange-light)';
+    el.style.borderWidth = '2px';
+    selectedSceneTemplate = sceneName;
+  }
+  
+  updateSwitchButton();
+}
+
+function updateSwitchButton(){
+  var btn = document.getElementById('switchSceneBtn');
+  if(selectedSceneTemplate){
+    btn.disabled = false;
+    btn.style.background = 'var(--orange)';
+    btn.style.cursor = 'pointer';
+    btn.textContent = '切换至「' + selectedSceneTemplate + '」';
+    btn.onclick = confirmSceneSwitch;
+  } else {
+    btn.disabled = true;
+    btn.style.background = '#e0dbd0';
+    btn.style.cursor = 'not-allowed';
+    btn.textContent = '选择场景模板';
+  }
+}
+
+function confirmSceneSwitch(){
+  if(!selectedSceneTemplate) return;
+  
+  // 关闭设置界面
+  closeSettingsOverlay();
+  
+  // 显示切换成功提示
+  var t=document.getElementById('sceneToast');
+  document.getElementById('sceneToastText').textContent='已切换至「'+selectedSceneTemplate+'」· 快捷按钮和提示词已更新';
+  t.style.display='block';
+  setTimeout(function(){t.style.display='none'},4000);
+  
+  // 更新问候语
+  var greetMap={'通用助手':'早上好，今天有什么需要我帮你做的？','运营助手':'早上好！今天要创作什么内容？','科研助理':'早上好，有什么文献或论文需要处理？','产研助手':'早上好，今天有什么产品研发任务？','客服专员':'早上好，有哪些用户问题需要处理？','行政助手':'早上好，有什么行政事务需要处理？'};
+  document.getElementById('greeting').textContent=greetMap[selectedSceneTemplate]||'早上好，开始我们的工作吧！';
+  
+  // 更新建议卡片内容
+  renderSuggest();
+  
+  // 更新当前场景标记
+  selectedScene = selectedSceneTemplate;
+}
+
+// Task hint functions
+function closeTaskHint(){
+  document.getElementById('taskHint').style.display='none';
+}
+
+function openTaskFromHint(){
+  closeTaskHint();
+  toggleTaskPanel();
+  document.getElementById('taskEntry').classList.add('pulse');
+  setTimeout(function(){document.getElementById('taskEntry').classList.remove('pulse');},2000);
+}
+
+// Suggest functions
+function renderSuggest(){
+  var items=suggestMap[selectedScene]||suggestMap['通用助手'];
+  var html='';
+  items.forEach(function(t){
+    html+='<div class="suggest-item" onclick="fillInput(this)">'+t+'</div>';
+  });
+  document.getElementById('suggestItems').innerHTML=html;
+}
+
+function fillInput(el){
+  document.getElementById('inputBox').value=el.textContent;
+  document.getElementById('suggestCard').style.display='none';
+}
+
+function handleSend(){
+  var v=document.getElementById('inputBox').value.trim();
+  if(!v) return;
+  document.getElementById('inputBox').value='';
+  document.getElementById('suggestCard').style.display='none';
+  
+  // 显示成就提示
+  var ach=document.getElementById('achievement');
+  ach.style.display='block';
+  setTimeout(function(){ach.style.display='none'},5000);
+  
+  // 首次对话后显示场景切换提示
+  setTimeout(function(){
+    showSceneSwitchHint();
+  },6000);
+}
+
+// Tips functions
+var tipsOpen=false;
+function toggleTips(){
+  tipsOpen=!tipsOpen;
+  document.getElementById('tipsPanel').style.display=tipsOpen?'block':'none';
+}
+function closeTips(){
+  tipsOpen=false;
+  document.getElementById('tipsPanel').style.display='none';
+  document.getElementById('tipsBtn').style.display='none';
+}
+function switchCat(idx,el){
+  document.querySelectorAll('.cat-tab').forEach(function(t){t.classList.remove('active')});
+  el.classList.add('active');
+  renderTipsContent(idx);
+}
+function renderTipsContent(idx){
+  var items=tipsData[idx];
+  var html='';
+  items.forEach(function(item,i){
+    html+='<div class="tip-item"><div class="tip-q"><span class="tq-num">'+(i+1)+'</span>'+item.q+'</div><div class="tip-a">'+item.a;
+    if(item.ex){
+      html+='<div class="tip-example"><div class="ex-label">'+item.ex.label+'</div>'+item.ex.text.replace(/\n/g,'<br>')+'</div>';
+    }
+    html+='</div></div>';
+  });
+  document.getElementById('tipsContent').innerHTML=html;
+}
+
+// Task functions
+function renderTaskItems(){
+  var done=taskData.filter(function(t){return t.done}).length;
+  document.getElementById('taskCount').textContent=done+'/'+taskData.length;
+  document.getElementById('taskProgress').textContent=done+'/'+taskData.length;
+  document.getElementById('taskBarFill').style.width=Math.round(done/taskData.length*100)+'%';
+  var html='';
+  taskData.forEach(function(t){
+    html+='<div class="task-list-item"><div class="tli-check'+(t.done?' done':'')+'">'+(t.done?'<svg viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>':'')+'</div><div class="tli-text'+(t.done?' done':'')+'">'+t.text+'</div></div>';
+  });
+  document.getElementById('taskItems').innerHTML=html;
+}
+function toggleTaskPanel(){
+  var p=document.getElementById('taskPanel');
+  p.style.display=p.style.display==='block'?'none':'block';
+}
+
+init();
+</script>
+<script src="entry.js"></script>
+</body>
+</html>
