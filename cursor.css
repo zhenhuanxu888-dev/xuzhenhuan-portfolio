@@ -22,6 +22,21 @@
 .site-cursor.is-interactive::before{opacity:.55;transform:scale(1.32)}
 .site-cursor.is-interactive img{animation:site-cat-curious .7s ease-in-out infinite alternate}
 .site-cursor.is-pouncing img{animation:site-cat-pounce .42s cubic-bezier(.18,.7,.25,1) both}
+.site-touch-cat{
+  position:fixed;z-index:2147483000;width:70px;height:70px;pointer-events:none;
+  transform:translate(-50%,-88%);transform-origin:center bottom;
+  animation:site-touch-appear .92s cubic-bezier(.18,.75,.24,1) both;
+}
+.site-touch-cat::before{
+  content:"";position:absolute;inset:5px;border-radius:50%;
+  background:radial-gradient(circle,#b7ffe0a3,transparent 68%);filter:blur(9px);
+}
+.site-touch-cat img{
+  position:relative;width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 1px 2px #091910) drop-shadow(0 0 9px #b7ffe0);
+  animation:site-touch-wiggle .55s ease-out both;
+}
+.site-touch-cat.is-on-light img{filter:brightness(0) saturate(100%) invert(24%) sepia(24%) saturate(760%) hue-rotate(87deg) drop-shadow(0 0 4px #9acaa3)}
 .site-cursor-effects{position:fixed;inset:0;z-index:2147482999;pointer-events:none;overflow:hidden}
 .site-cursor-star,.site-cursor-trail{
   position:absolute;display:block;background:url('assets/images/star-outline.png') center/contain no-repeat;
@@ -44,7 +59,13 @@ html.site-cursor-enabled iframe{cursor:auto!important}
 @keyframes site-cat-breathe{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}
 @keyframes site-cat-curious{from{transform:rotate(-11deg) scale(1.02)}to{transform:rotate(8deg) scale(1.1)}}
 @keyframes site-cat-pounce{0%,100%{transform:scale(1) rotate(0)}35%{transform:scale(.79) rotate(-14deg)}68%{transform:scale(1.2) rotate(8deg)}}
+@keyframes site-touch-appear{0%{opacity:0;transform:translate(-50%,-60%) scale(.42)}20%{opacity:1;transform:translate(-50%,-100%) scale(1.13)}52%{opacity:1;transform:translate(-50%,-92%) scale(.96)}78%{opacity:1;transform:translate(-50%,-97%) scale(1)}100%{opacity:0;transform:translate(-50%,-125%) scale(.72)}}
+@keyframes site-touch-wiggle{0%{transform:rotate(-13deg)}40%{transform:rotate(9deg)}75%{transform:rotate(-4deg)}100%{transform:rotate(0)}}
 @keyframes site-star-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0)}20%{opacity:1}75%{opacity:.95}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.9) rotate(var(--spin))}}
 @keyframes site-trail-fade{0%{opacity:.75;transform:translate(-50%,-50%) scale(.8) rotate(0)}100%{opacity:0;transform:translate(-50%,15px) scale(.2) rotate(70deg)}}
 @keyframes site-flash-out{from{opacity:1;transform:translate(-50%,-50%) scale(.4)}to{opacity:0;transform:translate(-50%,-50%) scale(2.9)}}
-@media(prefers-reduced-motion:reduce),(pointer:coarse){.site-cursor,.site-cursor-effects{display:none!important}html.site-cursor-enabled,html.site-cursor-enabled *{cursor:auto!important}}
+@media(pointer:coarse){.site-cursor{display:none!important}html.site-cursor-enabled,html.site-cursor-enabled *{cursor:auto!important}}
+@media(prefers-reduced-motion:reduce){.site-cursor,.site-cursor-effects{display:none!important}.site-touch-cat{animation:site-touch-still .92s ease both}.site-touch-cat img{animation:none!important}html.site-cursor-enabled,html.site-cursor-enabled *{cursor:auto!important}}
+.motion-paused .site-touch-cat{animation:site-touch-still .92s ease both}
+.motion-paused .site-touch-cat img{animation:none}
+@keyframes site-touch-still{0%,100%{opacity:0;transform:translate(-50%,-88%)}20%,75%{opacity:1;transform:translate(-50%,-88%)}}

@@ -40,7 +40,7 @@
     host.classList.add('prototype');
     host.innerHTML = `<div class="prototype-tabs" role="group" aria-label="选择体验片段">${config.entries.map((entry, index) => `<button type="button" aria-pressed="${index === 0}" data-entry="${index}">${entry[1]}</button>`).join('')}</div>
       <div class="prototype-note"><p></p><span class="prototype-count"></span></div>
-      <div class="prototype-tools"><small>交互原型 · 示例数据 · 不连接真实业务</small><button type="button" data-fit disabled>查看全貌</button><button type="button" data-reset disabled>重新开始</button><button type="button" data-expand>展开体验 ↗</button><a data-open target="_blank" rel="noopener">独立窗口 ↗</a></div>
+      <div class="prototype-tools"><small>交互原型 · 示例数据 · 不连接真实业务</small><button type="button" data-fit disabled>查看全貌</button><button type="button" data-reset disabled>重新开始</button><button type="button" data-expand>展开体验 ↗︎</button><a data-open target="_blank" rel="noopener">独立窗口 ↗︎</a></div>
       <div class="prototype-scroll"><div class="prototype-cover"><img src="assets/images/${config.poster}.webp" alt="" loading="lazy"><div class="prototype-cover-copy"><strong>${config.title}</strong><p>${config.intro}</p><button type="button" data-start>开始体验 →</button></div></div></div>
       <p class="prototype-status" role="status">点击开始后加载原型；切换片段会重置本次演示。小屏幕可在原型区域内横向滑动。</p>`;
     const scroll = host.querySelector('.prototype-scroll');
@@ -91,7 +91,7 @@
       host.removeAttribute('role'); host.removeAttribute('aria-modal'); host.removeAttribute('aria-label');
       document.body.style.overflow = oldOverflow;
       if (placeholder) { placeholder.remove(); placeholder = null; }
-      expandButton.textContent = '展开体验 ↗';
+      expandButton.textContent = '展开体验 ↗︎';
       expandButton.focus({ preventScroll: true });
     }
     function expand() {

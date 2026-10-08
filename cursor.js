@@ -13,6 +13,10 @@
   effects.setAttribute('aria-hidden', 'true');
   document.body.append(cursor, effects);
 
+  const touchCatSource = `${prototype ? '../' : ''}assets/images/magic-cat.png`;
+  let touchStart = null;
+  let touchCat = null;
+
   let active = false;
   let lastTrail = 0;
   let lastX = 0;
@@ -57,6 +61,78 @@
     effect.addEventListener('animationend', () => effect.remove(), { once: true });
     setTimeout(() => effect.remove(), 1400);
   }
+
+  function showTouchCat(x, y, target) {
+    touchCat?.remove();
+    const hero = document.querySelector('.hero');
+    hero?.classList.remove('has-touch-cat');
+    if (hero?.contains(target)) hero.classList.add('has-touch-cat');
+    const cat = document.createElement('div');
+    cat.className = 'site-touch-cat';
+    cat.setAttribute('aria-hidden', 'true');
+    cat.style.left = `${Math.max(36, Math.min(innerWidth - 36, x))}px`;
+    cat.style.top = `${Math.max(64, Math.min(innerHeight - 16, y))}px`;
+    cat.innerHTML = `<img src="${touchCatSource}" alt="">`;
+    document.body.append(cat);
+    touchCat = cat;
+    const light = target instanceof Element && lightSurface(target);
+    cat.classList.toggle('is-on-light', light);
+    effects.classList.toggle('is-on-light', light);
+    if (!paused() && !reduced.matches) {
+      addEffect('site-cursor-flash', x, y);
+      for (let index = 0; index < 5; index++) {
+        const angle = (index / 5) * Math.PI * 2 - .45;
+        addEffect('site-cursor-star', x, y - 28, {
+          '--dx': `${Math.cos(angle) * 32}px`,
+          '--dy': `${Math.sin(angle) * 32}px`,
+          '--size': `${12 + index % 3 * 4}px`,
+          '--spin': `${index % 2 ? -80 : 80}deg`,
+          '--duration': '760ms'
+        });
+      }
+    }
+    setTimeout(() => {
+      cat.remove();
+      if (touchCat === cat) {
+        touchCat = null;
+        hero?.classList.remove('has-touch-cat');
+      }
+    }, 960);
+  }
+
+  try {
+    const arrival = JSON.parse(sessionStorage.getItem('portfolio-touch-arrival') || 'null');
+    sessionStorage.removeItem('portfolio-touch-arrival');
+    if (arrival && Date.now() - arrival.time < 1800) {
+      requestAnimationFrame(() => showTouchCat(arrival.x * innerWidth, arrival.y * innerHeight, document.body));
+    }
+  } catch { /* Storage may be unavailable in private browsing. */ }
+
+  addEventListener('pointerdown', event => {
+    if (event.pointerType !== 'touch' || !event.isPrimary) return;
+    touchStart = { id: event.pointerId, x: event.clientX, y: event.clientY, time: performance.now() };
+  }, { passive: true });
+
+  addEventListener('pointerup', event => {
+    if (event.pointerType !== 'touch' || !touchStart || event.pointerId !== touchStart.id) return;
+    const moved = Math.hypot(event.clientX - touchStart.x, event.clientY - touchStart.y);
+    const elapsed = performance.now() - touchStart.time;
+    touchStart = null;
+    if (moved > 14 || elapsed > 550) return;
+    showTouchCat(event.clientX, event.clientY, event.target);
+    const link = event.target instanceof Element && event.target.closest('a[href]');
+    if (link && link.target !== '_blank') {
+      try {
+        const destination = new URL(link.href, location.href);
+        if (destination.origin === location.origin && destination.pathname !== location.pathname) {
+          sessionStorage.setItem('portfolio-touch-arrival', JSON.stringify({
+            x: event.clientX / innerWidth, y: event.clientY / innerHeight, time: Date.now()
+          }));
+        }
+      } catch { /* Navigation still works without the transition. */ }
+    }
+  }, { passive: true });
+  addEventListener('pointercancel', () => { touchStart = null; }, { passive: true });
 
   addEventListener('pointermove', event => {
     if (!isAllowed() || event.pointerType !== 'mouse') return;

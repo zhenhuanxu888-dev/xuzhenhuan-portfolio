@@ -169,7 +169,7 @@
       await reel.play();
       reelButton.textContent = '暂停片段 Ⅱ';
       reelButton.setAttribute('aria-pressed', 'true');
-    } catch { reelButton.textContent = '无法播放，查看完整作品 ↗'; }
+    } catch { reelButton.textContent = '无法播放，查看完整作品 ↗︎'; }
   });
   reel?.addEventListener('timeupdate', () => { if (reel.currentTime > 27) reel.currentTime = 17; });
   if (reel) new IntersectionObserver(([entry]) => {
