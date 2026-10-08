@@ -15,6 +15,8 @@
 
   const touchCatSource = `${prototype ? '../' : ''}assets/images/magic-cat.png`;
   let touchStart = null;
+  let pendingTap = null;
+  let pendingTapTimer = 0;
   let touchCat = null;
 
   let active = false;
@@ -72,25 +74,14 @@
     cat.setAttribute('aria-hidden', 'true');
     cat.style.left = `${Math.max(36, Math.min(innerWidth - 36, x))}px`;
     cat.style.top = `${Math.max(64, Math.min(innerHeight - 16, y))}px`;
-    cat.innerHTML = `<img src="${touchCatSource}" alt="">`;
+    const sparks = !paused() && !reduced.matches
+      ? Array.from({ length: 5 }, (_, index) => `<i class="site-touch-spark" style="--angle:${index * 72 - 24}deg;--distance:-${33 + index % 2 * 11}px;--delay:${index * 35}ms"></i>`).join('')
+      : '';
+    cat.innerHTML = `<img src="${touchCatSource}" alt="">${sparks}`;
     document.body.append(cat);
     touchCat = cat;
     const light = target instanceof Element && lightSurface(target);
     cat.classList.toggle('is-on-light', light);
-    effects.classList.toggle('is-on-light', light);
-    if (!paused() && !reduced.matches) {
-      addEffect('site-cursor-flash', x, y);
-      for (let index = 0; index < 5; index++) {
-        const angle = (index / 5) * Math.PI * 2 - .45;
-        addEffect('site-cursor-star', x, y - 28, {
-          '--dx': `${Math.cos(angle) * 32}px`,
-          '--dy': `${Math.sin(angle) * 32}px`,
-          '--size': `${12 + index % 3 * 4}px`,
-          '--spin': `${index % 2 ? -80 : 80}deg`,
-          '--duration': '760ms'
-        });
-      }
-    }
     setTimeout(() => {
       cat.remove();
       if (touchCat === cat) {
@@ -98,6 +89,18 @@
         hero?.classList.remove('has-touch-cat');
       }
     }, 960);
+  }
+
+  function rememberTouchArrival(link, tap) {
+    if (!link || link.target === '_blank') return false;
+    try {
+      const destination = new URL(link.href, location.href);
+      if (destination.origin !== location.origin || destination.pathname === location.pathname) return false;
+      sessionStorage.setItem('portfolio-touch-arrival', JSON.stringify({
+        x: tap.x / innerWidth, y: tap.y / innerHeight, time: Date.now()
+      }));
+      return true;
+    } catch { return false; }
   }
 
   try {
@@ -119,20 +122,37 @@
     const elapsed = performance.now() - touchStart.time;
     touchStart = null;
     if (moved > 14 || elapsed > 550) return;
-    showTouchCat(event.clientX, event.clientY, event.target);
-    const link = event.target instanceof Element && event.target.closest('a[href]');
-    if (link && link.target !== '_blank') {
-      try {
-        const destination = new URL(link.href, location.href);
-        if (destination.origin === location.origin && destination.pathname !== location.pathname) {
-          sessionStorage.setItem('portfolio-touch-arrival', JSON.stringify({
-            x: event.clientX / innerWidth, y: event.clientY / innerHeight, time: Date.now()
-          }));
-        }
-      } catch { /* Navigation still works without the transition. */ }
-    }
+    const target = event.target;
+    const interactive = target instanceof Element && target.closest(interactiveSelector);
+    if (!interactive) { showTouchCat(event.clientX, event.clientY, target); return; }
+    clearTimeout(pendingTapTimer);
+    pendingTap = { x: event.clientX, y: event.clientY, target, interactive, time: performance.now() };
+    // Safari may suppress a synthesized click if the page changes during pointerup.
+    // Leave the DOM untouched until the native click has had a chance to run.
+    pendingTapTimer = setTimeout(() => {
+      const tap = pendingTap;
+      pendingTap = null;
+      if (!tap) return;
+      if (tap.interactive?.isConnected) {
+        const link = tap.interactive.closest('a[href]');
+        if (link) rememberTouchArrival(link, tap);
+        tap.interactive.click();
+      } else {
+        showTouchCat(tap.x, tap.y, tap.target);
+      }
+    }, 700);
   }, { passive: true });
   addEventListener('pointercancel', () => { touchStart = null; }, { passive: true });
+
+  addEventListener('click', event => {
+    if (!pendingTap || performance.now() - pendingTap.time > 900) return;
+    const tap = pendingTap;
+    pendingTap = null;
+    clearTimeout(pendingTapTimer);
+    const link = event.target instanceof Element && event.target.closest('a[href]');
+    if (link && !event.defaultPrevented && rememberTouchArrival(link, tap)) return;
+    setTimeout(() => showTouchCat(tap.x, tap.y, tap.target), 0);
+  }, { passive: true });
 
   addEventListener('pointermove', event => {
     if (!isAllowed() || event.pointerType !== 'mouse') return;
